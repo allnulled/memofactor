@@ -1,0 +1,9 @@
+{
+  "auto.translation.1": "nota",
+  "auto.translation.2": "cacheamos igual en cualquier entorno.",
+  "auto.translation.3": "descripción",
+  "auto.translation.4": "Esta lista contiene los ficheros que serán incluidos en `dist/memofactory.unbundled.js`.",
+  "auto.translation.5": "Esta lista contiene los ficheros que serán incluidos en `dist/memofactory.js`.",
+  "auto.translation.6": "explicación",
+  "auto.translation.7": "el update es un poco extraño, por la columna data.\nLo que hace es:\n  1. Un select de todos los coincidentes con el where.\n  2. Un bucle para cada uno:\n  2.1. Un extends del data actual con el values proporcionado\n  2.2. Un update normal\n    - hay que hacer un método, update_one_by_id sería\n    - de forma totalmente asíncrona"
+}

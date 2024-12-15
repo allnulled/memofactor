@@ -1,0 +1,94 @@
+{
+  "files": {
+    "index.html": {
+      "sections": {
+        "0. Prelude": [
+          {
+            "$file": "/home/carlos/Escritorio/memofactor/src/lib/memory_connection.js",
+            "$location": {
+              "start": {
+                "offset": 264,
+                "line": 8,
+                "column": 1
+              },
+              "end": {
+                "offset": 316,
+                "line": 9,
+                "column": 1
+              }
+            },
+            "nota": "cacheamos igual en cualquier entorno.",
+            "$code.label": "undefined",
+            "$output": "index.html"
+          }
+        ],
+        "Building process": [
+          {
+            "$file": "/home/carlos/Escritorio/memofactor/src/build.js",
+            "$location": {
+              "start": {
+                "offset": 0,
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "offset": 143,
+                "line": 6,
+                "column": 3
+              }
+            },
+            "$code": "const allinone_list = [\n  \"lib/imports.js\",\n  \"lib/basic_logger.js\",\n  \"lib/basic_templates.js\",\n  \"lib/basic_trait.js\",\n  \"lib/memory_connection.js\",\n  \"lib/memory.js\",\n  \"lib/ext/sqlite3.js\",\n  \"lib/ext/socket.io-client.js\",\n  \"lib/ext/ufs.js\",\n  \"lib/exports.js\",\n];\n",
+            "$code.label": "allinone_list",
+            "$section": "Building process",
+            "$priority": "100",
+            "descripción": "Esta lista contiene los ficheros que serán incluidos en `dist/memofactory.js`.",
+            "$output": "index.html"
+          },
+          {
+            "$file": "/home/carlos/Escritorio/memofactor/src/build.js",
+            "$location": {
+              "start": {
+                "offset": 0,
+                "line": 1,
+                "column": 1
+              },
+              "end": {
+                "offset": 152,
+                "line": 6,
+                "column": 3
+              }
+            },
+            "$code": "const separated_list = [\n  \"lib/imports.js\",\n  \"lib/basic_logger.js\",\n  \"lib/basic_templates.js\",\n  \"lib/memory_connection.js\",\n  \"lib/memory.js\",\n  \"lib/ext/sqlite3.js\",\n  // \"lib/ext/socket.io-client.js\",\n  // \"lib/ext/ufs.js\",\n  \"lib/exports.js\",\n];\n",
+            "$code.label": "separated_list",
+            "$section": "Building process",
+            "$priority": "99",
+            "descripción": "Esta lista contiene los ficheros que serán incluidos en `dist/memofactory.unbundled.js`.",
+            "$output": "index.html"
+          }
+        ],
+        "Operaciones CRUD. Update.": [
+          {
+            "$file": "/home/carlos/Escritorio/memofactor/src/lib/memory_connection.js",
+            "$location": {
+              "start": {
+                "offset": 8395,
+                "line": 235,
+                "column": 3
+              },
+              "end": {
+                "offset": 8859,
+                "line": 246,
+                "column": 6
+              }
+            },
+            "$section": "Operaciones CRUD. Update.",
+            "explicación": "el update es un poco extraño, por la columna data.\nLo que hace es:\n  1. Un select de todos los coincidentes con el where.\n  2. Un bucle para cada uno:\n  2.1. Un extends del data actual con el values proporcionado\n  2.2. Un update normal\n    - hay que hacer un método, update_one_by_id sería\n    - de forma totalmente asíncrona",
+            "$code": "\n  async update(table, where, values) {\n    this.logger.trace(\"connection.update\", arguments);\n    try {\n      if (typeof values !== \"object\") {\n        throw new Error(\"Required parameter «values» to be an object on «update»\");\n      }\n      if (!Array.isArray(where)) {\n        throw new Error(\"Required parameter «where» to be an array on «update»\");\n      }\n      const selection = await this.select(table, where);\n      const all_promises = [];\n      for (let index_row = 0; index_row < selection.length; index_row++) {\n        try {\n          const selected = selection[index_row];\n          const current_data = this.parse_json(selected.data);\n          const id = selected.id;\n          const changed_data = Object.assign(current_data, values);\n          const update_promise = this.update_one_by_id(table, id, changed_data);\n          all_promises.push(update_promise);\n        } catch (error) {\n          this.handle_update_async_error(error);\n        }\n      }\n      return await Promise.all(all_promises);\n    } catch (error) {\n      this.logger.error(\"update\", error, true);\n    }\n  }\n",
+            "$code.label": "Método update",
+            "$output": "index.html"
+          }
+        ]
+      }
+    }
+  }
+}

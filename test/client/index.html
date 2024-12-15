@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memofactory</title>
+    <script src="./memofactory.js"></script>
+</head>
+<body>
+    <h3>Memofactory</h3>
+    <div>Client test</div>
+    <div>Dependencies: sqlite, socket.io-client.</div>
+    <div id="test"></div>
+    <script>
+        const main = async function() {
+            try {
+                const db = await memofactory.memory.create_connection();
+                await db.create_table("whet");
+                await db.insert("whet", {alias:"whatevereeee"});
+                await db.insert("whet", {alias:"whatevereeee"});
+                await db.insert("whet", {alias:"whatevereeee"});
+                await db.insert("whet", {alias:"whatevereeee"});
+                await db.insert("whet", {alias:"whatevereeee"});
+                await db.insert("whet", {alias:"whatevereeee"});
+                const set = await db.select("whet");
+                console.log(set);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        main();
+    </script>
+</body>
+</html>
